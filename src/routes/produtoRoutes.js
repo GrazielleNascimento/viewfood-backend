@@ -50,12 +50,14 @@ router.post('/novo', async (req, res) => {
         categoria
     };
 
+    console.log(prod);
+
     // insere o novo produto no banco
     try {
         await Produto.create(prod);
         res.status(201).json({ message: 'novo produto cadastrado com sucesso!' });
     } catch (error) {
-        res.status(500).json({ error: error });
+        res.status(500).json({ message: error });
     }
 });
 

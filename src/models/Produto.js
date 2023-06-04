@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const Produto = mongoose.model('Produto', {
     codigo: String,
     nome: String,
-    quantidade: Number,
+    quantidade: String,
     dataValidade: String,
-    preco: Number,
-    categoira: String,
+    preco: String,
+    categoria: String,
 })
 
 module.exports = Produto;
