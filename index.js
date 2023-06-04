@@ -1,4 +1,5 @@
-const express = require('express')
+const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -11,6 +12,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use(cors());
 
 //rotas
 const usuarioRoutes = require('./src/routes/usuarioRoutes');

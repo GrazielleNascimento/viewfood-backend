@@ -13,17 +13,45 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/novo', async (req, res) => {
-    const { nome, usuario, senha } = req.body;
+router.post('/', async (req, res) => {
+    const { email, senha } = req.body;
 
-    if (!nome || !usuario || !senha) {
+    if (!email || !senha) {
+        res.status(422).json({ error: 'os campos necessários nao foram preecnhidos!' });
+        return;
+    }
+
+    const usua = {
+        email,
+        senha
+    };
+
+    // confere se o usuario está esta cadastrado no banco
+    try {
+        const usuarioEncontrado = await Usuario.findOne({ email: req.body.email, senha: req.body.senha })
+
+        if (!usuarioEncontrado) {
+            res.status(401).json({ error: 'Usuaria não cadastrado' })
+            return;
+        }
+
+        res.status(200).json({ message: 'usuario cadastrado!' });
+    } catch (error) {
+        res.status(500).json({ error: error });
+    }
+});
+
+router.post('/novo', async (req, res) => {
+    const { nome, email, senha } = req.body;
+
+    if (!nome || !email || !senha) {
         res.status(422).json({ error: 'os campso necessários nao foram preecnhidos!' });
         return;
     }
 
     const usua = {
         nome,
-        usuario,
+        email,
         senha
     };
 
