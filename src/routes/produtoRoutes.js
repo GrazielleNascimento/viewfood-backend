@@ -17,6 +17,7 @@ router.get('/', async (req, res) => {
 router.get('/:codigo', async (req, res) => {
     const cod = req.params.codigo;
 
+    console.log(cod);
     try {
 
         const produto = await Produto.findOne({ codigo: cod });
@@ -27,6 +28,7 @@ router.get('/:codigo', async (req, res) => {
         }
 
         res.status(200).json(produto);
+        console.log(produto)
     } catch (error) {
         res.status(500).json({ error: error })
     }
@@ -62,7 +64,7 @@ router.post('/novo', async (req, res) => {
 });
 
 // atualiza um produto
-router.patch('/:codigo', async (req, res) => {
+router.put('/:codigo', async (req, res) => {
     const cod = req.params.codigo;
 
     const { codigo, nome, quantidade, dataValidade, preco, categoria } = req.body;
@@ -84,7 +86,7 @@ router.patch('/:codigo', async (req, res) => {
             return;
         }
 
-        res.status(200).json(prod);
+        res.status(200).json({ message: 'Produto atualizado com sucesso!' });
         return
 
     } catch (error) {
@@ -108,7 +110,7 @@ router.delete('/:codigo', async (req, res) => {
     try {
 
         await Produto.deleteOne({ codigo: cod })
-        res.status(200).json({ message: 'O produto foi removido' })
+        res.status(200).json({ message: 'O produto foi removido com sucesso!' })
     } catch (error) {
         res.status(500).json(error)
     }
