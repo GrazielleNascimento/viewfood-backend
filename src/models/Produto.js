@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const Produto = mongoose.model('Produto', {
     codigo: String,
     nome: String,
-    quantidade: String,
-    dataValidade: String,
-    preco: String,
+    quantidade: Number,
+    dataValidade: Date,
+    preco: Number,
     categoria: String,
 })
 

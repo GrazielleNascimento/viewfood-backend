@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 });
 
 //consulta um produto pelo codigo
-router.get('/:codigo', async (req, res) => {
+router.get('/codigo/:codigo', async (req, res) => {
     const cod = req.params.codigo;
 
     console.log(cod);
@@ -23,7 +23,7 @@ router.get('/:codigo', async (req, res) => {
         const produto = await Produto.findOne({ codigo: cod });
 
         if (!produto) {
-            res.status(422).json({ message: 'O produto nao foi encontrado' })
+            res.status(422).json({ message: 'O produto não foi encontrado' })
             return
         }
 
@@ -32,7 +32,28 @@ router.get('/:codigo', async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error })
     }
-})
+});
+
+// consulta produto com dataValidade vencida
+router.get('/vencido', async (req, res) => {
+    try {
+        const dataAtual = new Date();
+
+        const produtoVencido = await Produto.find({
+            dataValidade: { $lt: dataAtual.toISOString() }
+        });
+
+        if (produtoVencido.length === 0) {
+            res.status(422).json({ message: 'Nenhum produto vencido encontrado' });
+            return;
+        }
+
+        console.log(produtoVencido)
+        res.status(200).json(produtoVencido);
+    } catch (error) {
+        res.status(500).json({ error: error });
+    }
+});
 
 // cadastra um novo produto
 router.post('/novo', async (req, res) => {
@@ -94,7 +115,7 @@ router.put('/:codigo', async (req, res) => {
     }
 
 
-})
+});
 
 // deleta um produto
 router.delete('/:codigo', async (req, res) => {
@@ -116,5 +137,5 @@ router.delete('/:codigo', async (req, res) => {
     }
 
 
-})
+});
 module.exports = router;
