@@ -55,6 +55,27 @@ router.get('/vencido', async (req, res) => {
     }
 });
 
+// consulta produtos por catergoria
+router.get('/categoria/:categoria', async (req, res) => {
+    const categoria = req.params.categoria;
+
+    console.log(categoria);
+    try {
+
+        const produto = await Produto.find({ categoria: categoria });
+
+        if (!produto) {
+            res.status(422).json({ message: `Nao foram encontrados produtos da categororia ${categoria}` })
+            return
+        }
+
+        res.status(200).json(produto);
+        console.log(produto)
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+});
+
 // cadastra um novo produto
 router.post('/novo', async (req, res) => {
     const { codigo, nome, quantidade, dataValidade, preco, categoria } = req.body;
