@@ -77,7 +77,7 @@ router.get('/categoria/:categoria', async (req, res) => {
 });
 
 // cadastra um novo produto
-router.post('/novo', async (req, res) => {
+router.post('/cadastrar', async (req, res) => {
     const { codigo, nome, quantidade, dataValidade, preco, categoria } = req.body;
 
     if (!codigo || !nome || !quantidade || !dataValidade || !preco || !categoria) {
