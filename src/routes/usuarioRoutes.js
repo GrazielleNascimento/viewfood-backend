@@ -17,7 +17,7 @@ router.post('/', async (req, res) => {
     const { email, senha } = req.body;
 
     if (!email || !senha) {
-        res.status(422).json({ error: 'os campos necessários nao foram preecnhidos!' });
+        res.status(422).json({ error: 'os campos necessários nao foram preechidos!' });
         return;
     }
 
@@ -35,22 +35,24 @@ router.post('/', async (req, res) => {
             return;
         }
 
-        res.status(200).json({ message: 'usuario cadastrado!' });
+        console.log(usuarioEncontrado)
+        res.status(200).json({ body: usuarioEncontrado });
     } catch (error) {
         res.status(500).json({ error: error });
     }
 });
 
 router.post('/novo', async (req, res) => {
-    const { nome, email, senha } = req.body;
+    const { nome, local, email, senha } = req.body;
 
-    if (!nome || !email || !senha) {
-        res.status(422).json({ error: 'os campso necessários nao foram preecnhidos!' });
+    if (!nome || !local || !email || !senha) {
+        res.status(422).json({ error: 'os campos necessários nao foram preecnhidos!' });
         return;
     }
 
     const usua = {
         nome,
+        local,
         email,
         senha
     };
